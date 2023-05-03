@@ -29,6 +29,7 @@ public class FirstServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 클라이언트에서 GET 방식의 요청이 왔을 때,
 		// WAS(Web Application Server; Tomcat)가 호출하는 메서드.
