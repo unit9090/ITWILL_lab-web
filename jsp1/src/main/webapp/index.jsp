@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -26,6 +27,19 @@
 			<li><a href="actiontag.jsp">액션 태그(action tag)</a></li>
 			<li><a href="el.jsp">EL(Expression Language)</a></li>
 			<li><a href="jstl.jsp">JSTL</a></li>
+			<li><a href="form2.jsp">form 제출</a></li>
+			<li><a href="form2-result.jsp?username=adm&in&color=b">클릭 1</a></li>
+			<li>
+				<c:url var="reqURL" value="form2-result.jsp">
+					<c:param name="username" value="adm&in"></c:param>
+					<c:param name="color" value="g"></c:param>
+				</c:url>
+				<a href="${ reqURL }">클릭 2</a>
+			</li>
+			<li>
+				<a href="format.jsp">포맷팅</a>
+			</li>
+			<li><a href="mvc">MVC pattern</a></li>
 		</ul>
 	</body>
 </html>

@@ -1,3 +1,5 @@
+<%@page import="com.itwill.jsp1.model.Contact"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -38,7 +40,62 @@
 				<li>${ s }</li>
 			</c:forEach>
 		</ul>
+				
+		<%-- 테이블에서 사용할 더미 데이터 --%>
+		<%
+			ArrayList<Contact> list = new ArrayList<>();
+			for(int i = 0; i < 5; i++) {
+				Contact c = new Contact(i, "이름_" + i, "phone_" + i, "email_" + i);
+				list.add(c);
+			}
+			
+			// 리스트를 EL에서 사용할 수 있도록 하기 위해서:
+			pageContext.setAttribute("contacts", list);
+		%>
 		
+		<h2>JSP를 이용한 테이블 작성</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>phone</th>
+					<th>email</th>
+				</tr>
+			</thead>
+			<tbody>				
+				<% for(Contact c : list) { %>
+					<tr>
+						<td><%= c.getId() %></td>
+						<td><%= c.getName() %></td>
+						<td><%= c.getPhone() %></td>
+						<td><%= c.getEmail() %></td>
+					</tr>
+				<% } %>
+			</tbody>
+		</table>
+		
+		<h2>JSTL, EL을 이용한 테이블 작성</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>phone</th>
+					<th>email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ contacts }" var="c">
+					<tr>
+						<td>${ c.id }</td>
+						<td>${ c.name }</td>
+						<td>${ c.phone }</td>
+						<td>${ c.email }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 		
 	</body>
 </html>
