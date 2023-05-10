@@ -8,18 +8,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class PostController
+ * Servlet implementation class PostCreateController
  */
-@WebServlet(name="postController", urlPatterns = { "/post" })
-public class PostController extends HttpServlet {
+@WebServlet(name="postCreateController", urlPatterns = { "/post/create" })
+public class PostCreateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("PostController.doGet() 호출");
+		System.out.println("postCreateController.doGet() 호출");
 		
-		request.getRequestDispatcher("/WEB-INF/post/post.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/post/create.jsp").forward(request, response);
 	}
+
 }
