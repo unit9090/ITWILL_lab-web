@@ -6,11 +6,13 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Post</title>
+		
+		<c:set var="post" value="${ post }"></c:set>
 	</head>
 	
 	<body>
 		<header>
-			<h1>새 포스트 작성 페이지</h1>
+			<h1>포스트 수정 페이지</h1>
 		</header>
 		
 		
@@ -30,24 +32,27 @@
 		</nav>
 		
 		<main>
-			<c:url var="postCreate" value="/post/create"></c:url>
-			<form action="${ postCreate }" method="post">
+			<c:url var="postDetail" value="/post/detail">
+				<c:param name="id" value="${ post.id }"></c:param>
+			</c:url>
+			<form action="${ postDetail }" method="post">
 				<div>
 					<input type="text" name="title" placeholder="제목 입력"
+						value="${ post.title }"
 						required autofocus/>
 				</div>
 				<div>
 					<textarea rows="5" cols="80" name="content" placeholder="내용 입력"
-						required></textarea>
+						required>${ post.content }</textarea>
 				</div>
 				<div>
-					<input type="text" name="author" placeholder="아이디 입력" required />
+					<input type="text" name="author" placeholder="아이디 입력"
+						value="${ post.author }" required />
 				</div>
 				<div>
 					<input type="submit" value="작성 완료"/>
 				</div>
 			</form>
 		</main>
-		
 	</body>
 </html>

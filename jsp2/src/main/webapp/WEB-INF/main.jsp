@@ -19,10 +19,6 @@
 					<c:url var="postList" value="/post"></c:url>
 					<a href="${ postList }">포스트 목록 페이지</a>
 				</li>
-				<li>
-					<c:url var="postCreate" value="/post/create"></c:url>
-					<a href="${ postCreate }">새 포스트 작성</a>
-				</li>
 			</ul>
 		</nav>
 		
