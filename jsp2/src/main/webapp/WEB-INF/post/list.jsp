@@ -63,16 +63,40 @@
 				<select name="category">
 					<c:if test="${ category == 't' }">
 						<option value="t" selected>제목</option>
+						<option value="c">내용</option>
+						<option value="tc">제목 + 내용</option>
+						<option value="a">작성자</option>
 					</c:if>
 					<c:if test="${ category == 'c' }">
+						<option value="t">제목</option>
 						<option value="c" selected>내용</option>
+						<option value="tc">제목 + 내용</option>
+						<option value="a">작성자</option>
 					</c:if>
 					<c:if test="${ category == 'tc' }">
+						<option value="t">제목</option>
+						<option value="c">내용</option>
 						<option value="tc" selected>제목 + 내용</option>
+						<option value="a">작성자</option>
 					</c:if>
 					<c:if test="${ category == 'a' }">
+						<option value="t">제목</option>
+						<option value="c">내용</option>
+						<option value="tc">제목 + 내용</option>
 						<option value="a" selected>작성자</option>
-					</c:if>					
+					</c:if>
+					<c:if test="${ category == 'a' }">
+						<option value="t">제목</option>
+						<option value="c">내용</option>
+						<option value="tc">제목 + 내용</option>
+						<option value="a" selected>작성자</option>
+					</c:if>
+					<c:if test="${ category == null }">
+						<option value="t">제목</option>
+						<option value="c">내용</option>
+						<option value="tc">제목 + 내용</option>
+						<option value="a">작성자</option>
+					</c:if>
 				</select>
 				<input type="text" name="keyword" placeholder="검색어" value="${ keyword }" required autofocus/>
 				<input type="submit" value="검색"/>
