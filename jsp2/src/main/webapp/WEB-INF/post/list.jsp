@@ -38,6 +38,11 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${ posts }" var="post">
+					<c:if test="${ posts == '' }">
+						<tr>
+							<td colspan="4">등록된 post가 없습니다.</td>
+						</tr>
+					</c:if>
 						<tr>
 							<td>${ post.id }</td>
 							<td>
@@ -52,6 +57,26 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<c:url value="/post/search" var="searchPage"></c:url>
+			<form action="${ searchPage }">
+				<select name="category">
+					<c:if test="${ category == 't' }">
+						<option value="t" selected>제목</option>
+					</c:if>
+					<c:if test="${ category == 'c' }">
+						<option value="c" selected>내용</option>
+					</c:if>
+					<c:if test="${ category == 'tc' }">
+						<option value="tc" selected>제목 + 내용</option>
+					</c:if>
+					<c:if test="${ category == 'a' }">
+						<option value="a" selected>작성자</option>
+					</c:if>					
+				</select>
+				<input type="text" name="keyword" placeholder="검색어" value="${ keyword }" required autofocus/>
+				<input type="submit" value="검색"/>
+			</form>			
 		</main>
 	</body>
 </html>

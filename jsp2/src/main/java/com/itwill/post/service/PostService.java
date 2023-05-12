@@ -40,10 +40,16 @@ public class PostService {
 		return postDao.insert(post);
 	}
 
-	public Post detail(String id) {
-		log.info("detail({})", id);
+	public Post read(long id) {
+		log.info("read(id = {})", id);
 		
 		return postDao.select(id);
+	}
+	
+	public int delete(Long id) {
+		log.info("delete(id = {})", id);
+		
+		return postDao.delete(id);
 	}
 
 	public int update(Post post) {
@@ -51,5 +57,13 @@ public class PostService {
 		
 		return postDao.update(post);
 	}
+
+	public List<Post> search(String category, String keyword) {
+		log.info("search(category = {}, keyword = {})", category, keyword);
+		
+		return postDao.read(category, keyword);
+	}
+
+	
 	
 }

@@ -32,32 +32,19 @@ public class PostDetailController extends HttpServlet {
 			throws ServletException, IOException {
 		log.info("doGet()");
 		
-		String id = request.getParameter("id");
-		Post post = postService.detail(id);
+		// 요청 URL의 쿼리스트링에 포함된 요청 파라미터 id(포스트 번호, PK) 값을 찾음.
+		String param = request.getParameter("id");	// getParameter는 문자열만 리턴.
+		long id = Long.parseLong(param);			// id는 숫자 타입이어야 하기 때문에 문자열을 숫자로 변환.
+		log.info("id = {}", id);
+
+		// DB에서 화면에 보여줄 포스트 내용을 검색		
+		Post post = postService.read(id);
 		
+		// 뷰(JSP)에 전달.
 		request.setAttribute("post", post);
 		
+		// 뷰로 포워드.
 		request.getRequestDispatcher("/WEB-INF/post/detail.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		log.info("doPost()");
-		
-		Long id = Long.parseLong(request.getParameter("id"));
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		String author = request.getParameter("author");
-		
-		Post existingPost = postService.detail(request.getParameter("id"));
-		Post post = new Post(id, title, content, author, existingPost.getCreatedTime(), null);
-		
-		int result = postService.update(post);
-		log.info("update result = {}", result);
-		
-		response.sendRedirect("/post/post");
 	}
 
 }
