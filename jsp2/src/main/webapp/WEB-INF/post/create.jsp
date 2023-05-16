@@ -16,6 +16,11 @@
 		
 		<nav>
 			<ul>
+				<li>						
+					<c:url var="signOut" value="/user/signout"></c:url>
+					<span>${ signedInUser }</span>
+					<a href="${ signOut }">로그아웃</a>
+				</li>
 				<li>
 					<c:url var="mainPage" value="/"></c:url>
 					<!-- <a href="../">메인 페이지</a> -->
@@ -41,7 +46,8 @@
 						required></textarea>
 				</div>
 				<div>
-					<input type="text" name="author" placeholder="아이디 입력" required />
+					<!-- 로그인한 사용자 아이디를 value로 설정. 화면에서는 보이지 않게. -->
+					<input type="hidden" name="author" value="${ signedInUser }"/>
 				</div>
 				<div>
 					<input type="submit" value="작성 완료"/>

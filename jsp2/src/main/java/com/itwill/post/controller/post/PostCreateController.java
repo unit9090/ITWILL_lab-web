@@ -52,7 +52,7 @@ public class PostCreateController extends HttpServlet {
 		
 		Post post = new Post(0, title, content, author, null, null);
 		
-		// TODO: 서비스 계층의 메서드를 호출해서 DB에 포스트를 저장
+		// 서비스 계층의 메서드를 호출해서 DB에 포스트를 저장
 		int result = postService.create(post);
 		log.info("create result = {}", result);
 		
