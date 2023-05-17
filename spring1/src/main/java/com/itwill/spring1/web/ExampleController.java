@@ -5,6 +5,11 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.itwill.spring1.dto.UserDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,9 +29,9 @@ public class ExampleController {
 		log.info("home()");
 		
 		LocalDateTime now = LocalDateTime.now();
-		model.addAttribute("now", now);
+		model.addAttribute("now", now);	// 부에 전달할 데이터를 세팅.
 		
-		return "index";	// 뷰의 이름
+		return "index";	// 뷰의 이름(/WEB-INF/views/index.jsp)
 	}
 	
 	@GetMapping("/ex1")
@@ -37,4 +42,63 @@ public class ExampleController {
 		// 요청 주소의 이름이 뷰의 이름이 됨.
 	}
 	
+	@GetMapping("/ex2")
+	public void getParamEx(String username, int age) {
+		log.info("getParamEx(username = {}, age = {})", username, age);
+		
+	}
+	
+	@PostMapping("/ex3")
+	public String getParamEx2(
+			@RequestParam(name = "username") String name,
+			/* defaultValue는 항상 문자열로 써야한다. */
+			@RequestParam(defaultValue = "0") int age
+	) {
+		// 컨트롤러 메서드를 선언할 때, 파라미터 선언 앞에 @RequestParam 애너테이션을 사용하는 경우:
+        // (1) 메서드 파라미터와 요청 파라미터 이름이 다를 때, name 속성으로 요청 파라미터 이름을 설정.
+        // (2) 요청 파라미터 값이 없거나 비어있을 때, defaultValue 속성 설정.
+		log.info("getParamEx2(name = {}, age = {})", name, age);
+		
+		return "ex2";
+	}
+	
+	@GetMapping("/ex4")
+	public String getParameEx3(UserDto user) {
+		log.info("getParamEx3(user= {})", user);
+		// DispatcherServlet은 컨트롤러의 메서드를 호출하기 위해서,
+        // 1. 요청 파라미터들을 분석(request.getParameter()).
+        // 2. UserDto의 기본 생성자를 호출해서 객체를 생성.
+        // 3. 요청 파라미터들의 이름으로 UserDto의 setter 메서드를 찾아서 호출.
+        // 4. UserDto 객체를 컨트롤러 메서드를 호출할 때 argument로 전달.
+		
+		return "ex2";
+	}
+	
+	@GetMapping("/sample")
+	public void sample() {
+		log.info("sample()");
+	}
+	
+	@GetMapping("/forward")
+	public String forwardTest() {
+		log.info("fowardTest()");
+		
+		// 컨트롤러 메서드에서 다른 페이지(요청 주소)로 forward하는 방법:
+		// "forward:"으로 시작하는 문자열을 리턴하면,
+		// DispatcherServlet은 리턴값이 뷰의 이름이 아니라 포워드 이동할 페이지 주소로 인식.
+		return "forward:/sample";
+	}
+	
+	@GetMapping("/redirect")
+	public String redirectTest(RedirectAttributes attrs) {
+		log.info("redirectTest()");
+		
+		// 컨트롤러 메서드에서 리다이렉트되는 페이지까지 유지되는 정보를 저장할 때:
+		attrs.addFlashAttribute("redAttr", "테스트");
+		
+		// 컨트롤러 메서드에서 다른 페이지(요청 주소)로 redirect하는 방법:
+		// "redirect:"으로 시작하는 문자열을 리턴하면,
+		// DispatcherServlet은 리턴값이 뷰의 이름이 아니라 리다이렉트 이동할 페이지 주소로 인식.
+		return "redirect:/sample";
+	}
 }
