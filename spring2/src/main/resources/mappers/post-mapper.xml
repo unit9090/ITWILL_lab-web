@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwill.spring2.repository.PostRepository">
+<!-- namespace의 값은 PostRepository 인터페이스가 있는 패키지 이름과 인터페이스 이름. -->
+
+	<!-- id의 값은 PostRepository 인터페이스에서 선언하는 메서드 이름 -->
+	<insert id="insert">
+		INSERT INTO POSTS(TITLE, CONTENT, AUTHOR, CREATED_TIME, MODIFIED_TIME)
+		VALUES (#{title}, #{content}, #{author}, systimestamp, systimestamp)
+	</insert>
+	
+	<select id="selectOrderByIdDesc" resultType="com.itwill.spring2.domain.Post">
+		SELECT * FROM POSTS ORDER BY ID DESC
+	</select>
+	
+	<select id="selectById" resultType="com.itwill.spring2.domain.Post">
+		SELECT * FROM POSTS WHERE ID = #{id}
+	</select>
+	
+	<update id="updateTitleAndContent">
+		UPDATE POSTS
+		SET TITLE = #{title},
+			CONTENT = #{content},
+			MODIFIED_TIME = SYSTIMESTAMP
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM POSTS WHERE ID = #{id}
+	</delete>
+	
+	<!-- 왜지 시벌 -->
+	<select id="selectByKeyword" resultType="com.itwill.spring2.domain.Post">
+		SELECT * FROM POSTS
+		<trim prefix="WHERE" prefixOverrides="OR">
+			<if test='category.equals("t")'>
+				OR TITLE LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='category.equals("c")'>
+				OR CONTENT LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test='category.equals("a")'>
+				OR AUTHOR LIKE '%' || #{keyword} || '%'
+			</if>
+		</trim>
+		ORDER BY ID DESC
+	</select>
+	
+</mapper>
