@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	// textarea#content 요소를 찾음.
 	const textareaContent = document.querySelector('textarea#content');
 	
-	const inputAuthor = document.querySelector('input#author');
-	
 	// 수정완료/삭제 버튼 찾음.
 	const btnUpdate = document.querySelector('button#btnUpdate');
 	const btnDelete = document.querySelector('button#btnDelete'); 

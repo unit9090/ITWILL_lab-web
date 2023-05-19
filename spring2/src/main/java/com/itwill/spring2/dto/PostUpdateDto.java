@@ -16,14 +16,12 @@ public class PostUpdateDto {
 	private long id;
 	private String title;
 	private String content;
-	private String author;
 	
 	public Post toEntity() {
 		return Post.builder()
 					.id(id)
 					.title(title)
 					.content(content)
-					.author(author)
 					.build();
 	}
 }
