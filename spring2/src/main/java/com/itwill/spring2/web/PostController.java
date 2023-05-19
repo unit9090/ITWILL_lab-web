@@ -1,13 +1,16 @@
 package com.itwill.spring2.web;
 
 import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwill.spring2.domain.Post;
+import com.itwill.spring2.dto.PostCreateDto;
+import com.itwill.spring2.dto.PostListDto;
+import com.itwill.spring2.dto.PostUpdateDto;
 import com.itwill.spring2.service.PostService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,10 +31,60 @@ public class PostController {
 		// WEB-INF/views/post/list.jsp
 		
 		// 컨트롤러는 서비스 계층의 메서드를 호출해서 서비스 기능을 수행.
-		List<Post> list = postService.read();
+		List<PostListDto> list = postService.read();
 		
 		// 뷰에 보여줄 데이터를 model에 저장.
 		model.addAttribute("posts", list);
+	}
+	
+	@GetMapping("/create")
+	public void create(Model model) {
+		log.info("GET create()");
+	}
+	
+	@PostMapping("/create")
+	public String create(PostCreateDto dto) {
+		log.info("POST create({})", dto);
+		
+		int result = postService.create(dto);
+		log.info("포스트 등록 결과 = {}", result);
+		
+		// Post - Redirect - Get
+		return "redirect:/post/list";
+	}
+	
+	@GetMapping("/detail")
+	public void detail(long id, Model model) {
+		log.info("detail(id = {})", id);
+		
+		model.addAttribute("post", postService.read(id));
+	}
+	
+	@GetMapping("/modify")
+	public void modify(long id, Model model) {
+		log.info("modify(id = {})", id);
+		
+		model.addAttribute("post", postService.read(id));
+	}
+	
+	@PostMapping("/update")
+	public String update(PostUpdateDto dto) {
+		log.info("POST update(dto = {})", dto);
+		
+		int result = postService.update(dto);
+		log.info("포스트 업데이트 결과 = {}", result);
+		
+		return "redirect:/post/list";
+	}
+	
+	@PostMapping("/delete")
+	public String delete(long id) {
+		log.info("delete(id = {})", id);
+		
+		int result = postService.delete(id);
+		log.info("포스트 삭제 결과 = {}", result);
+		
+		return "redirect:/post/list";
 	}
 	
 }
