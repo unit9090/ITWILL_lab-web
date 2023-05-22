@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itwill.spring2.repository.ReplyRepository">
+	
+	<!-- 해당 POST 댓글 전체 검색 -->
+	<select id="selectByPostId" resultType="com.itwill.spring2.domain.Reply">
+		SELECT * FROM REPLIES WHERE POST_ID = #{post_id} ORDER BY ID
+	</select>
+	
+	<!-- 해당 포스트에 댓글 insert -->
+	<insert id="insert">
+		INSERT INTO REPLIES (POST_ID, REPLY_TEXT, WRITER)
+		VALUES (#{post_id}, #{reply_text}, #{writer})
+	</insert>
+	
+	<!-- 해당 댓글 update -->
+	<update id="update">
+		UPDATE REPLIES
+		SET REPLY_TEXT = #{reply_text}, MODIFIED_TIME = SYSTIMESTAMP
+		WHERE ID = #{id}
+	</update>
+	
+	<!-- 해당 댓글 delete -->
+	<delete id="delete">
+		DELETE FROM REPLIES WHERE ID = #{id}
+	</delete>
+	
+	<select id="selectReplyCountWithPostId" resultType="java.lang.Long">
+		SELECT COUNT(ID) FROM REPLIES WHERE POST_ID = #{post_id}
+	</select>
+	
+</mapper>

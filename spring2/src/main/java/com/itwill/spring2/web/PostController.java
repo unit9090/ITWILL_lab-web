@@ -69,12 +69,13 @@ public class PostController {
 	
 	@PostMapping("/update")
 	public String update(PostUpdateDto dto) {
-		log.info("POST update(dto = {})", dto);
+		log.info("update(dto = {})", dto);
 		
 		int result = postService.update(dto);
 		log.info("포스트 업데이트 결과 = {}", result);
 		
-		return "redirect:/post/list";
+		// return "redirect:/post/list";
+		return "redirect:/post/detail?id=" + dto.getId();
 	}
 	
 	@PostMapping("/delete")
@@ -82,7 +83,7 @@ public class PostController {
 		log.info("delete(id = {})", id);
 		
 		int result = postService.delete(id);
-		log.info("포스트 삭제 결과 = {}", result);
+		log.info("삭제 결과 = {}", result);
 		
 		return "redirect:/post/list";
 	}

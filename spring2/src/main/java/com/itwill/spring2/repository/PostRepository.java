@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.itwill.spring2.domain.Post;
+import com.itwill.spring2.dto.PostListDto;
 
 // application-context.xml에서 scan하는 패키지에 있기 때문에
 // 인터페이스를 구현하는 클래스가 MyBatis에 의해서 자동으로 만들어짐.
@@ -25,5 +26,5 @@ public interface PostRepository {
 	
 	List<Post> selectByKeyword(@Param("category") String category, @Param("keyword") String keyword);
 	
-	
+	List<PostListDto> selectWithReplyCount();
 }

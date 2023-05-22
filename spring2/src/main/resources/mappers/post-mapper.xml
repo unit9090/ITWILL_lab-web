@@ -31,6 +31,40 @@
 		DELETE FROM POSTS WHERE ID = #{id}
 	</delete>
 	
+	<!-- 포스트 list + 댓글 count -->
+	<select id="selectWithReplyCount1"
+			resultType="com.itwill.spring2.dto.PostListDto">
+		SELECT 
+		      DISTINCT(P.ID)
+		    , P.TITLE
+		    , P.AUTHOR
+		    , P.CREATED_TIME
+		    , (
+		        SELECT COUNT(*)
+		        FROM REPLIES
+		        WHERE POST_ID = P.ID
+		    ) AS RCNT
+		FROM POSTS P
+		LEFT OUTER JOIN REPLIES R ON 
+		    R.POST_ID = P.ID
+		ORDER BY P.ID DESC
+	</select>
+	
+	<select id="selectWithReplyCount"
+			resultType="com.itwill.spring2.dto.PostListDto">
+		SELECT 
+		      P.ID
+		    , P.TITLE
+		    , P.AUTHOR
+		    , P.CREATED_TIME
+		    , COUNT(R.ID) AS RCNT
+		FROM POSTS P
+		LEFT OUTER JOIN REPLIES R ON 
+		    R.POST_ID = P.ID
+		GROUP BY P.ID, P.TITLE, P.AUTHOR, P.CREATED_TIME
+		ORDER BY P.ID DESC
+	</select>
+	
 	<!-- 왜지 시벌 -->
 	<select id="selectByKeyword" resultType="com.itwill.spring2.domain.Post">
 		SELECT * FROM POSTS

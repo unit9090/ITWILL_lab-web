@@ -37,9 +37,11 @@ public class PostService {
 	public List<PostListDto> read() {
 		log.info("read()");
 		
-		List<Post> list = postRepository.selectOrderByIdDesc();
+		return postRepository.selectWithReplyCount();
 		
-		return list.stream().map(PostListDto::fromEntity).toList();
+		// List<Post> list = postRepository.selectOrderByIdDesc();
+		
+		// return list.stream().map(PostListDto::fromEntity).toList();
 	}
 	
 	// 포스트 id 검색

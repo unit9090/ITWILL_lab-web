@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,6 +24,7 @@ public class RepositoryTest {
 	
 	@Autowired
 	private PostRepository postRepository;
+	
 	
 	// @Test
 	public void testPostRepository() {
@@ -81,12 +81,13 @@ public class RepositoryTest {
 		assertEquals(1, result);
 	}
 	
-	@Test
+	// @Test
 	public void testSelectByKeyword() {
 		String category = "t";
 		String keyword = "insert";
 		List<Post> result = postRepository.selectByKeyword(category, keyword);
 	}
+	
 	
 	
 	
