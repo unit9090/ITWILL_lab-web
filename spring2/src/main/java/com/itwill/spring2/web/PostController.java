@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itwill.spring2.domain.Post;
 import com.itwill.spring2.dto.PostCreateDto;
+import com.itwill.spring2.dto.PostDetailDto;
 import com.itwill.spring2.dto.PostListDto;
 import com.itwill.spring2.dto.PostUpdateDto;
 import com.itwill.spring2.service.PostService;
@@ -57,7 +58,9 @@ public class PostController {
 	public void detail(long id, Model model) {
 		log.info("detail(id = {})", id);
 		
-		model.addAttribute("post", postService.read(id));
+		PostDetailDto dto = postService.read(id);
+		
+		model.addAttribute("post", dto);
 	}
 	
 	@GetMapping("/modify")

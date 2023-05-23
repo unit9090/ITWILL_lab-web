@@ -1,9 +1,7 @@
 package com.itwill.spring2.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.spring2.domain.Post;
@@ -12,6 +10,7 @@ import com.itwill.spring2.dto.PostDetailDto;
 import com.itwill.spring2.dto.PostListDto;
 import com.itwill.spring2.dto.PostUpdateDto;
 import com.itwill.spring2.repository.PostRepository;
+import com.itwill.spring2.repository.ReplyRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +31,7 @@ public class PostService {
 	
 //	@Autowired private PostRepository postRepository;	-> 1번 방법.
 	private final PostRepository postRepository;
+	private final ReplyRepository replyRepository;
 	
 	// 포스트 목록 페이지
 	public List<PostListDto> read() {
@@ -48,7 +48,16 @@ public class PostService {
 	public PostDetailDto read(long id) {
 		log.info("read(id = {})", id);
 		
-		return PostDetailDto.fromEntity(postRepository.selectById(id));
+		// DB POSTS 테이블에서 검색.
+		Post entity = postRepository.selectById(id);
+		// 검색한 내용을 DTO로 변환.
+		PostDetailDto dto = PostDetailDto.fromEntity(entity);
+		
+		// DB REPLIES 테이블에서 댓글 개수를 검색.
+		long count = replyRepository.selectReplyCountWithPostId(id);
+		dto.setReplyCount(count);
+		
+		return dto;
 	}
 	
 	// 새 포스트 작성 페이지

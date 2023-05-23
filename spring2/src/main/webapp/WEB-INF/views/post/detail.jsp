@@ -36,7 +36,7 @@
 			</nav>
 			
 			<main class="my-2">
-				<div class="card">
+				<section class="card">
 					<form class="card-body">
 						<div>
 							<label class="form-label" for="id">번호</label>
@@ -71,11 +71,39 @@
 						</c:url>
 						<a class="btn btn-outline-primary form-control" href="${ postModifyPage }">수정하기</a>
 					</div>
-				</div>
+				</section>	<!-- 포스트 상세보기 카드 -->
+				
+				<section class="my-2 card">
+					<div class="card-header">
+						<span>댓글</span><span id="replyCount">${ post.replyCount }</span>개	<!-- TODO: 실제 댓글 개수 -->
+						<button id="btnToggleReply" class="btn" data-toggle="toggle-off">보이기</button>
+					</div>
+					<div id="replyToggleDiv" class="card-body collapse">
+						<!-- 내 댓글 등록 -->
+						<div class="row my-2">
+							<label class="form-label" for="replyText">나의 댓글</label>
+							<div class="col-10">
+								<textarea class="form-control" id="replyText"></textarea>
+								<input class="d-none" id="writer" value="admin"/>	<!-- TODO: 로그인 사용자 아이디 -->
+							</div>
+							<div class="col-2">
+								<button id="btnAddReply" class="form-control btn btn-outline-success">등록</button>
+							</div>
+						</div>
+						
+						<!-- 댓글 목록 보여줄 영역 -->
+						<div class="row my-2" id="replies">
+							댓글 목록
+							
+						</div>
+					</div>
+				</section>	<!-- 댓글 등록, 댓글 리스트 카드 -->
 			</main>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 					integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 					crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+			<script type="text/javascript" src="../static/js/reply.js"></script>			
 		</div>
 	</body>
 </html>
