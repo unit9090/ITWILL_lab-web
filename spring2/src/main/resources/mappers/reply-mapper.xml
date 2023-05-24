@@ -6,7 +6,7 @@
 	
 	<!-- 해당 POST 댓글 전체 검색 -->
 	<select id="selectByPostId" resultType="com.itwill.spring2.domain.Reply">
-		SELECT * FROM REPLIES WHERE POST_ID = #{post_id} ORDER BY ID
+		SELECT * FROM REPLIES WHERE POST_ID = #{post_id} ORDER BY MODIFIED_TIME DESC
 	</select>
 	
 	<!-- 해당 포스트에 댓글 insert -->

@@ -1,13 +1,13 @@
 package com.itwill.spring2.web;
 
 import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.itwill.spring2.domain.Post;
 import com.itwill.spring2.dto.PostCreateDto;
 import com.itwill.spring2.dto.PostDetailDto;
 import com.itwill.spring2.dto.PostListDto;
