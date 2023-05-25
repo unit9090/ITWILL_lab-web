@@ -36,12 +36,73 @@ document.addEventListener('DOMContentLoaded', () => {
 			 });
 	}
 	
+	// 댓글 수정 모달 객체 생성 - backdrop:false(모달 밖을 클릭해도 안 사라짐), backdrop:true(모달 밖을 클릭하면 모달이 사라짐)
+	const modal = new bootstrap.Modal('div#replyUpdateModal', {backdrop : false});
+	// 모달 엘리먼트 찾기
+	const modalInput = document.querySelector('input#modalReplyId');
+	const modalTextarea = document.querySelector('textarea#modalReplyText');
+	const modalBtnUpdate = document.querySelector('button#modalBtnUpdate');
+	
 	// 댓글 수정 버튼의 리벤트 리스터 (콜백) 함수
 	const showUpdateModal = (e) => {
 		// console.log(e);
-		console.log(e.target);
+		// console.log(e.target);
+		const id = e.target.getAttribute('data-id');
+		const reqUrl = `/spring2/api/reply/${id}`;
+		axios.get(reqUrl)	// 서버로 GET 방식의 Ajax 요청을 보냄
+			 .then((response) => {	// 성공 응답이 왔을 때 실행할 콜백을 등록
+				// console.log(response);
+				// response에 포함된 data 객체에서 id, replyText 값을 찾음.
+				const { id, replyText } = response.data;
+				
+				// id와 replyText를 모달의 input과 textarea에 씀.
+				modalInput.value = id;
+				// modalInput.innerHTML = id;
+				
+				modalTextarea.value = replyText;
+				
+				// 모달을 보여줌.
+				modal.show();
+			 })
+			 .catch((error) => {	// 실패 응답이 왔을 때 실행할 콜백을 등록
+				console.log(error); 
+			 });		
+	}
+	
+	const updateReply = (e) => {
+		// 수정할 댓글 아이디
+		const id = modalInput.value;
+		// 수정할 댓글 내용
+		const replyText = modalTextarea.value;
+		
+		if(replyText === '') {
+			alert('댓글을 입력해주세요.');
+			return;
+		}
+		if(confirm('수정할까요?')) {
+			// PUT 방식의 Ajax 요청을 보냄
+			// Ajax 요청에 대한 성공/실패 콜백 등록.
+			const reqUrl = `/spring2/api/reply/${id}`;
+			const data = {replyText, id};
+			axios.put(reqUrl, data)
+				 .then((response) => {
+					 alert(`댓글 업데이트 성공(${response.data})`);
+					 getRepliesWithPostId();
+				 })
+				 .catch((error) => {
+					 alert('수정 실패');
+					 console.log(error);
+				 })
+				 .finally(() => {
+					 modal.hide();
+				 });
+		}
+		
 		
 	}
+	// 모달에서 [수정 내용 저장] 버튼 이벤트 리스터 등록
+	modalBtnUpdate.addEventListener('click', updateReply);
+	
 	
 	// 댓글 목록 HTML을 작성하고 replies 영역에 추가하는 함수.
 	// argument data: Ajax 요청의 응답으로 전달받은 데이터.
@@ -57,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		// for(let x in data) {} -> 인덱스 iteration
 		// for(let x of data) {} -> data의 객체
 		for(let reply of data) {
-			console.log(reply);
+			// console.log(reply);
 			
 			// Timestamp 타입 값을 날짜/시간 타입 문자열로 변환:
 			const modified = new Date(reply.modifiedTime).toLocaleString();
@@ -195,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		});	// 실행 응답이 왔을 때 실행할 콜백 함수 등록
 	};
 	btnAddReply.addEventListener('click', createReply);
+	
 	
 	/*
 		btnAddReply.addEventListener('click', () => {

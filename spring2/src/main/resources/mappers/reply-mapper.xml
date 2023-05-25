@@ -9,6 +9,10 @@
 		SELECT * FROM REPLIES WHERE POST_ID = #{post_id} ORDER BY MODIFIED_TIME DESC
 	</select>
 	
+	<select id="selectById" resultType="com.itwill.spring2.domain.Reply">
+		SELECT * FROM REPLIES WHERE ID = #{id}
+	</select>
+	
 	<!-- 해당 포스트에 댓글 insert -->
 	<insert id="insert">
 		INSERT INTO REPLIES (POST_ID, REPLY_TEXT, WRITER)

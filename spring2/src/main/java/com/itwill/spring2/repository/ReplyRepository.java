@@ -17,4 +17,6 @@ public interface ReplyRepository {
 	// 포스트에 달린 댓글의 개수를 리턴하는 메서드
 	long selectReplyCountWithPostId(long postId);
 	
+	Reply selectById(long id);
+	
 }
